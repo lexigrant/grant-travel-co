@@ -4,7 +4,6 @@ export type User = {
     name: string;
     picture: string;
     googleSub: string;
-    travels: Travel[];
 
 }
 
