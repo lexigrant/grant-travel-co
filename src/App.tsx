@@ -3,6 +3,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import './App.css';
+import Map from './Components/Map';
+import NewTravelEntry from './Components/NewTravelEntry';
 import TravelEntry from './Components/TravelEntry';
 import { Travel, User } from './Types';
 
@@ -54,6 +56,7 @@ const App = () => {
 
   // Update Travel Request
   const handleUpdate = async (editEntry: Travel) => {
+    console.log(editEntry)
     await axios.put(`${API_URL}/api/travel/${editEntry.id}`, editEntry)
     await refetch()
   }
@@ -71,6 +74,7 @@ const refetch = async () => {
       t.entryDate = new Date(t.entryDate)
       return t;
     })
+    const sortedTravels = travels.sort((a, b) => b.entryDate.getTime() - a.entryDate.getTime())
     setTravelEntries(travels)
   }
 }
@@ -89,13 +93,15 @@ const refetch = async () => {
   return (
     <div >
       <h1>Grant Travel Co</h1>
+      {travelEntries.length > 0 ? <Map travelEntry={travelEntries[0]} /> : null}
+      <NewTravelEntry handlePost={(newEntry)=>handlePost(newEntry)}/>
       {userObj?.name ?
         // User is authenticated so we display their travel diaries
         <>
           <p>HELLO</p>
           <p>{userObj.name}</p>
           {travelEntries.length > 0 ? travelEntries?.map(entry => {
-            return <TravelEntry travelEntry={entry} handleDelete={()=>handleDelete(entry)}/>
+            return <TravelEntry travelEntry={entry} handleDelete={()=>handleDelete(entry)} handleUpdate={handleUpdate}/>
           }) : <p>No Entries to Display</p>}
         </> :
         // User is unauthenticated, so we try to login/sign up

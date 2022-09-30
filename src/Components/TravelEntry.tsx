@@ -1,13 +1,22 @@
+import React from "react";
+import { useState } from "react";
 import { Travel } from "../Types";
+import EditEntry from "./EditEntry";
 
-const TravelEntry = ({travelEntry, handleDelete}: {travelEntry: Travel, handleDelete: () => void}) => {
+const TravelEntry = ({ travelEntry, handleDelete, handleUpdate }: { travelEntry: Travel, handleDelete: () => void, handleUpdate: (editEntry: Travel) => void }) => {
 
-    return(
+
+
+    return (
         <>
-        <p>{travelEntry.location}</p>
-        <p>{travelEntry.entryDate.toDateString()}</p>
-        <p>{travelEntry.diaryEntry}</p>
-        <button onClick={handleDelete}>X</button>
+            <p>{travelEntry.entryDate.toDateString()}</p>
+            <p>{travelEntry.location}</p>
+            <img style={
+                {height: 50, width:50}
+            } src={travelEntry.picture}/>
+            <p>{travelEntry.diaryEntry}</p>
+            <EditEntry handleUpdate={handleUpdate} initialEntryToEdit={travelEntry}/>
+            <button onClick={handleDelete}>X</button>
         </>
     )
 
