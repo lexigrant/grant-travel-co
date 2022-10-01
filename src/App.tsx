@@ -141,17 +141,20 @@ const App = () => {
           }
         </> :
         // User is unauthenticated, so we try to login/sign up
-        <GoogleLogin onSuccess={credentialResponse => {
-          const resp: any = credentialResponse.credential ? jwtDecode(credentialResponse.credential) : null;
-          console.log(resp)
-          if (resp) {
-            setGoogleUser(resp)
-          }
-        }}
-          onError={() => {
-            console.log('Login Failed');
-          }} />
+        <div className="googleLogin">
+          <GoogleLogin onSuccess={credentialResponse => {
+            const resp: any = credentialResponse.credential ? jwtDecode(credentialResponse.credential) : null;
+            console.log(resp)
+            if (resp) {
+              setGoogleUser(resp)
+            }
+          }}
+            onError={() => {
+              console.log('Login Failed');
+            }} />
+        </div>
       }
+
 
     </div>
   )

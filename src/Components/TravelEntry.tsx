@@ -10,21 +10,22 @@ const TravelEntry = ({ travelEntry, handleDelete, handleUpdate }: { travelEntry:
 
     return (
         <>
-            <div className="actualTravelEntry">
+        
+            { !showEdit && <div className="actualTravelEntry">
                 <div className="addCard">
-                <img className="image"
+                    <img className="image"
                         src={travelEntry.picture} />
-                        <div className="entryText">
-                    <div className="addHeader">
-                        <p>{travelEntry.entryDate.toDateString()}</p>
-                        <p>{travelEntry.location}</p>
-                    </div>
-                    
-                    <p className="diaryEntry">{travelEntry.diaryEntry}</p>
+                    <div className="entryText">
+                        <div className="addHeader">
+                            <p>{travelEntry.entryDate.toDateString()}</p>
+                            <p>{travelEntry.location}</p>
+                        </div>
+
+                        <p className="diaryEntry">{travelEntry.diaryEntry}</p>
                     </div>
                 </div>
-            </div>
-            {showEdit ? <><EditEntry handleUpdate={handleUpdate} initialEntryToEdit={travelEntry} /><button onClick={() => setShowEdit(false)}>Cancel</button></> : <button onClick={() => setShowEdit(true)}><svg
+            </div> }
+            {showEdit ? <><EditEntry handleUpdate={handleUpdate} initialEntryToEdit={travelEntry} /><button className="cancelButton" onClick={() => setShowEdit(false)}>Cancel</button></> : <button className="editButton" onClick={() => setShowEdit(true)}><svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -38,7 +39,7 @@ const TravelEntry = ({ travelEntry, handleDelete, handleUpdate }: { travelEntry:
                     fill="currentColor"
                 />
             </svg></button>}
-            <button onClick={handleDelete}>
+            <button className="trashButton" onClick={handleDelete}>
                 <svg
                     width="24"
                     height="24"

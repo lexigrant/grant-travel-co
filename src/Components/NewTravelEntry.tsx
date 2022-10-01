@@ -33,7 +33,7 @@ const NewTravelEntry = ({ handlePost, isShowing, onClickAdd }: { handlePost: (ne
     }, [value])
 
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: any) => {
         setTravel({ ...travel, [e.target.name]: e.target.value });
     }
 
@@ -50,17 +50,23 @@ const NewTravelEntry = ({ handlePost, isShowing, onClickAdd }: { handlePost: (ne
         <>
             {isShowing ? <>
                 <h3 className="addFormHeader">Add Diary Entry</h3>
-                <form onSubmit={handleSubmit} className="addForm">
-                    <input onChange={handleChange} type="date" name="entryDate" placeholder="Example: Thu Oct 20 2022" /><br />
-                    <GooglePlacesAutocomplete
-                        selectProps={{
-                            value,
-                            onChange: setValue,
-                        }} />
-                    <input onChange={handleChange} type="text" name="picture" placeholder="Example: https://assets.vogue.com/photos/5beb5d0a7509832ced4424f1/master/pass/00-promo-image-kansas-city-missouri-travel-guide.jpg" /><br />
-                    <input onChange={handleChange} type="text" name="diaryEntry" placeholder="Example: Dear Diary, ..." /><br />
-                    <input value='Add Entry' type="submit" />
-                </form>
+                <div className="addFormContainer">
+                    <form onSubmit={handleSubmit} className="addForm">
+                        <input className="addFormInput" onChange={handleChange} type="date" name="entryDate" placeholder="Example: Thu Oct 20 2022" /><br />
+                        <div className="addFormGoogleContainer">
+                            <div className="addFormGoogleInput">
+                                <GooglePlacesAutocomplete
+                                    selectProps={{
+                                        value,
+                                        onChange: setValue,
+                                    }} />
+                            </div>
+                        </div>
+                        <input className="addFormInput" onChange={handleChange} type="text" name="picture" placeholder="Example: https://assets.vogue.com/photos/5beb5d0a7509832ced4424f1/master/pass/00-promo-image-kansas-city-missouri-travel-guide.jpg" /><br />
+                        <textarea  onChange={handleChange} name="diaryEntry" placeholder="Example: Dear Diary ..." /><br />
+                        <input className="addFormSubmit" value='Add Entry' type="submit" />
+                    </form>
+                </div>
             </>
                 : <button className="addButton" onClick={onClickAdd}><svg
                     width="24"

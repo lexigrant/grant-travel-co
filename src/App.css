@@ -62,13 +62,20 @@ body {
   text-align: center;
   font-size: 35px;
 }
+.googleLogin {
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid black; */
+}
 /* New Travel Entry */
 .addForm {
 text-align: center;
+padding: .1em 0 .1em .5em;
+
 }
 .addFormHeader {
   text-align: center;
-  font-size: 25px;
+  font-size: 23px;
 }
 .addButton {
   position: absolute;
@@ -82,11 +89,49 @@ text-align: center;
   border-radius: 5px;
   cursor: pointer;
 }
+.addFormInput {
+width: 80%;
+height: 20px;
+margin: 8px;
+max-width: 800px;
+}
+.addFormGoogleInput{
+  width: 82%;
+  text-align: center;
+  max-width: 800px;
+}
+.addFormGoogleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.addFormContainer {
+  background-color: aliceblue;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 10px;
+  display:flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+
+}
+.addFormSubmit {
+  text-transform: uppercase;
+  background-color: #f4dcd6;
+  color: black;
+  height: 30px;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+}
 /* Travel entry */
 .image {
   width: 400px;
   height: 250px;
   margin: 60px;
+  display: flex;
+  border-radius: 10px;
 }
 .addHeader {
   flex: 1;
@@ -108,12 +153,83 @@ text-align: center;
 .entryText {
   display: flex;
   flex-direction: column;
-  /* border-width: 1px;
-  border-color: #282c34;
-  border-style: solid; */
   width: 100%;
   justify-content: center;
 }
 .diaryEntry {
   flex: 1;
+}
+.trashButton {
+  float: right;
+  background-color: #f4dcd6;
+  border: none;
+  margin: 6px;
+}
+.editButton {
+  float: left;
+  background-color: #f4dcd6;
+  border: none;
+  margin: 6px;
+}
+.cancelButton {
+  top: 0;
+  right: 0;
+  margin: 5px;
+  text-transform: uppercase;
+  background-color: white;
+  color: black;
+  height: 30px;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* Map */
+.stateButton{
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+/* edit entry */
+.editFormContainer {
+  background-color: aliceblue;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 10px;
+  display:flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+}
+.editFormGoogleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid black; */
+  margin: 5px;
+}
+.editFormGoogleInput{
+  width: 45%;
+  max-width: 800px;
+}
+.editFormSubmit {
+  text-transform: uppercase;
+  background-color: #f4dcd6;
+  color: black;
+  height: 30px;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.editForm { 
+  text-align: center;
+  padding: .1em 0 .1em .5em;
+}
+ 
+/* media queries */
+@media only screen and (max-width: 600px) {
+  .addCard {
+    flex-direction: column;
+    padding-right: 25px;
+  }
 }

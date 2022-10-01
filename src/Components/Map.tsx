@@ -42,7 +42,7 @@ const LocationPin = (props: LocationPinProps) => {
                 />
             </svg>
 
-            <button onClick={props.onClick}>{props.text}</button>
+            <button  className="stateButton" onClick={props.onClick}>{props.text}</button>
         </div>
     )
 }
