@@ -36,3 +36,84 @@
     transform: rotate(360deg);
   }
 }
+body {
+  background-color: #f4dcd6;
+  
+}
+/* App.tsx */
+.siteHeading {
+  text-align: center;
+  font-size: 40px;
+}
+.signOutButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  text-transform: uppercase;
+  background-color: white;
+  color: black;
+  height: 30px;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.greeting {
+  text-align: center;
+  font-size: 35px;
+}
+/* New Travel Entry */
+.addForm {
+text-align: center;
+}
+.addFormHeader {
+  text-align: center;
+  font-size: 25px;
+}
+.addButton {
+  position: absolute;
+  top: 0;
+  margin: 5px;
+  text-transform: uppercase;
+  background-color: #f4dcd6;
+  color: black;
+  height: 30px;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* Travel entry */
+.image {
+  width: 400px;
+  height: 250px;
+  margin: 60px;
+}
+.addHeader {
+  flex: 1;
+}
+.actualTravelEntry {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 10px;
+}
+.addCard {
+  background-color: aliceblue;
+  width: 95%;
+  justify-self: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.entryText {
+  display: flex;
+  flex-direction: column;
+  /* border-width: 1px;
+  border-color: #282c34;
+  border-style: solid; */
+  width: 100%;
+  justify-content: center;
+}
+.diaryEntry {
+  flex: 1;
+}

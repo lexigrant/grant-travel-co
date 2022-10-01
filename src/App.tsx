@@ -2,6 +2,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import axios, { AxiosRequestConfig } from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useEffect, useState } from 'react';
+import './index.css';
 import './App.css';
 import Map from './Components/Map';
 import NewTravelEntry from './Components/NewTravelEntry';
@@ -21,6 +22,8 @@ const App = () => {
   const [userObj, setUserObj] = useState<User | undefined>(undefined)
   const [travelEntries, setTravelEntries] = useState<Travel[]>([])
   const [googleUser, setGoogleUser] = useState<GoogleUserObj | undefined>(undefined)
+  const [activeTravelEntry, setActiveTravelEntry] = useState<Travel | undefined>(undefined)
+  const [showAddForm, setShowAddForm] = useState(false)
 
 
   const signUpNewUser = async (googleUser: GoogleUserObj) => {
@@ -58,26 +61,39 @@ const App = () => {
   const handleUpdate = async (editEntry: Travel) => {
     console.log(editEntry)
     await axios.put(`${API_URL}/api/travel/${editEntry.id}`, editEntry)
+    setActiveTravelEntry(editEntry)
     await refetch()
   }
 
   const handleDelete = async (deleteEntry: Travel) => {
     await axios.delete(`${API_URL}/api/travel/${deleteEntry.id}`)
+    setActiveTravelEntry(undefined)
     await refetch()
   }
 
-
-const refetch = async () => {
-  if (userObj) {
-    const data = await (await axios.get(`${API_URL}/api/user/${userObj.id}/travel`)).data as Travel[]
-    const travels = data.map(t => {
-      t.entryDate = new Date(t.entryDate)
-      return t;
-    })
-    const sortedTravels = travels.sort((a, b) => b.entryDate.getTime() - a.entryDate.getTime())
-    setTravelEntries(travels)
+  const onClickAdd = () => {
+    setShowAddForm(true)
+    setActiveTravelEntry(undefined)
   }
-}
+
+  const refetch = async () => {
+    if (userObj) {
+      const data = await (await axios.get(`${API_URL}/api/user/${userObj.id}/travel`)).data as Travel[]
+      const travels = data.map(t => {
+        t.entryDate = new Date(t.entryDate)
+        return t;
+      })
+      setTravelEntries(travels)
+    }
+  }
+
+  const signOut = () => {
+    setShowAddForm(false)
+    setActiveTravelEntry(undefined)
+    setGoogleUser(undefined)
+    setUserObj(undefined)
+    setTravelEntries([])
+  }
 
   useEffect(() => {
     if (googleUser) { login(googleUser) };
@@ -89,20 +105,40 @@ const refetch = async () => {
     refetch()
   }, [userObj])
 
+  useEffect(() => {
+    if (activeTravelEntry !== undefined) {
+      setShowAddForm(false)
+    }
+  }, [activeTravelEntry])
+
 
   return (
     <div >
-      <h1>Grant Travel Co</h1>
-      {travelEntries.length > 0 ? <Map travelEntry={travelEntries[0]} /> : null}
-      <NewTravelEntry handlePost={(newEntry)=>handlePost(newEntry)}/>
+      <h1 className="siteHeading">Grant Travel Co
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.00967 5.12761H11.0097C12.1142 5.12761 13.468 5.89682 14.0335 6.8457L16.5089 11H21.0097C21.562 11 22.0097 11.4477 22.0097 12C22.0097 12.5523 21.562 13 21.0097 13H16.4138L13.9383 17.1543C13.3729 18.1032 12.0191 18.8724 10.9145 18.8724H8.91454L12.4138 13H5.42485L3.99036 15.4529H1.99036L4.00967 12L4.00967 11.967L2.00967 8.54712H4.00967L5.44417 11H12.5089L9.00967 5.12761Z"
+            fill="currentColor"
+          />
+        </svg></h1>
+      {userObj && <button className="signOutButton" onClick={signOut}>Sign Out</button>}
+      {travelEntries.length > 0 ? <Map travelEntries={travelEntries} onClickPin={(t) => { setActiveTravelEntry(t) }} /> : null}
+      {userObj?.name ? <NewTravelEntry handlePost={(newEntry) => handlePost(newEntry)} isShowing={showAddForm} onClickAdd={onClickAdd} /> : null}
       {userObj?.name ?
         // User is authenticated so we display their travel diaries
         <>
-          <p>HELLO</p>
-          <p>{userObj.name}</p>
-          {travelEntries.length > 0 ? travelEntries?.map(entry => {
-            return <TravelEntry travelEntry={entry} handleDelete={()=>handleDelete(entry)} handleUpdate={handleUpdate}/>
-          }) : <p>No Entries to Display</p>}
+
+          {activeTravelEntry ? <TravelEntry travelEntry={activeTravelEntry} handleDelete={() => handleDelete(activeTravelEntry)} handleUpdate={handleUpdate} /> :
+            !showAddForm && (<>
+              <p className="greeting"> Hello {userObj?.name}! Add a new entry or relive an old one...</p>
+            </>)
+          }
         </> :
         // User is unauthenticated, so we try to login/sign up
         <GoogleLogin onSuccess={credentialResponse => {
