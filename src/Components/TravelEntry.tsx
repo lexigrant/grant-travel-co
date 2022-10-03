@@ -25,7 +25,7 @@ const TravelEntry = ({ travelEntry, handleDelete, handleUpdate }: { travelEntry:
                     </div>
                 </div>
             </div> }
-            {showEdit ? <><EditEntry handleUpdate={handleUpdate} initialEntryToEdit={travelEntry} /><button className="cancelButton" onClick={() => setShowEdit(false)}>Cancel</button></> : <button className="editButton" onClick={() => setShowEdit(true)}><svg
+            {showEdit ? <><EditEntry handleUpdate={handleUpdate} initialEntryToEdit={travelEntry} /><button className="cancelButton" onClick={() => setShowEdit(false)}>Close</button></> : <button className="editButton" onClick={() => setShowEdit(true)}><svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
